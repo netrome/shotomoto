@@ -13,7 +13,7 @@ fn main() {
     let shots1: Arc<Mutex<VecDeque<Shot>>> = Arc::new(Mutex::new(VecDeque::new()));
     let shots2: Arc<Mutex<VecDeque<Shot>>> = Arc::new(Mutex::new(VecDeque::new()));
 
-    for _ in 1..5{
+    for _ in 1..15{
         shots1.lock().unwrap().push_back(Shot{x: 0., y: 0., dx: 0., dy: 0.});
         shots2.lock().unwrap().push_back(Shot{x: 0., y: 0., dx: 0., dy: 0.});
     }
@@ -51,14 +51,14 @@ fn main() {
             for shot in shots1.lock().unwrap().iter(){
                 let diff = (shot.x - s2.x).powi(2) + (shot.y - s2.y).powi(2);
                 if diff < 400. {
-                    s2.health -= 0.01;
+                    s2.health -= 0.001;
                 }
             }
 
             for shot in shots2.lock().unwrap().iter(){
                 let diff = (shot.x - s1.x).powi(2) + (shot.y - s1.y).powi(2);
                 if diff < 400. {
-                    s1.health -= 0.01;
+                    s1.health -= 0.001;
                 }
             }
         });
@@ -75,16 +75,16 @@ fn main() {
 
             if s1.shooting {
                 s1.shooting = false;
-                let dx = 4.*s1.rot.to_radians().cos();
-                let dy = 4.*s1.rot.to_radians().sin();
+                let dx = 2.*s1.rot.to_radians().cos();
+                let dy = 2.*s1.rot.to_radians().sin();
                 shots1.lock().unwrap().pop_front();
                 shots1.lock().unwrap().push_back( Shot{ x: s1.x + 10.*dx, y: s1.y + 10.*dy, dx, dy });
             }
 
             if s2.shooting {
                 s2.shooting = false;
-                let dx = 4.*s2.rot.to_radians().cos();
-                let dy = 4.*s2.rot.to_radians().sin();
+                let dx = 2.*s2.rot.to_radians().cos();
+                let dy = 2.*s2.rot.to_radians().sin();
                 shots2.lock().unwrap().pop_front();
                 shots2.lock().unwrap().push_back( Shot{ x: s2.x + 10.*dx, y: s2.y + 10.*dy, dx, dy });
             }
