@@ -1,0 +1,7 @@
+[package]
+name = "shotomoto"
+version = "0.1.0"
+authors = ["Marten <marten3@kth.se>"]
+
+[dependencies]
+piston_window = "0.80.0"
